@@ -1,0 +1,64 @@
+#!/bin/sh
+# Startup script for smf-clamd milter
+#
+# chkconfig: 2345 75 35
+# description: Run smf-clamd milter that stops infected e-Mail messages
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+[ -f /usr/local/sbin/smf-clamd ] || exit 0
+
+prog="smf-clamd"
+LOCKFILE=/var/lock/subsys/$prog
+
+start() {
+    echo -n $"Starting $prog: " 
+    daemon /usr/local/sbin/smf-clamd
+    RETVAL=$?
+    touch $LOCKFILE
+    echo
+    return $RETVAL
+}
+
+stop() {
+    if test "x`pidof smf-clamd`" != x; then
+	echo -n $"Stopping $prog: "
+	killproc smf-clamd
+	echo
+    fi
+    RETVAL=$?
+    rm -f $LOCKFILE
+    return $RETVAL
+}
+
+case "$1" in
+	start)
+	    start
+	    ;;
+	
+	stop)
+	    stop
+	    ;;
+	
+	status)
+	    status smf-clamd
+	    ;;
+	restart)
+	    stop
+	    start
+	    ;;
+	condrestart)
+	    if [ -f $LOCKFILE ]; then
+		stop
+		start
+	    fi
+	    ;;
+	
+	*)
+	    echo $"Usage: $0 {start|stop|restart|condrestart|status}"
+	    exit 1
+
+esac
+
+exit $RETVAL

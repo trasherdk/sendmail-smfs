@@ -1,0 +1,65 @@
+#!/bin/sh
+# Startup script for smf-spamd milter
+#
+# chkconfig: 2345 75 35
+# description: Run smf-spamd milter that stops spam with the help of the SpamAssassin daemon
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+[ -f /usr/local/sbin/smf-spamd ] || exit 0
+
+prog="smf-spamd"
+LOCKFILE=/var/lock/subsys/$prog
+
+start() {
+    echo -n $"Starting $prog: " 
+    daemon /usr/local/sbin/smf-spamd
+    RETVAL=$?
+    touch $LOCKFILE
+    echo
+    return $RETVAL
+}
+
+stop() {
+    if test "x`pidof smf-spamd`" != x; then
+	echo -n $"Stopping $prog: "
+	killproc smf-spamd
+	echo
+    fi
+    RETVAL=$?
+    rm -f $LOCKFILE
+    return $RETVAL
+}
+
+case "$1" in
+	start)
+	    start
+	    ;;
+	
+	stop)
+	    stop
+	    ;;
+	
+	status)
+	    status smf-spamd
+	    ;;
+	restart)
+	    stop
+	    start
+	    ;;
+	condrestart)
+	    if [ -f $LOCKFILE ]; then
+		stop
+		start
+	    fi
+	    ;;
+	
+	*)
+	    echo $"Usage: $0 {start|stop|restart|condrestart|status}"
+	    exit 1
+
+esac
+
+exit $RETVAL
+

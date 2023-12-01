@@ -1,0 +1,36 @@
+#!/bin/sh
+# Start/stop/restart the smf-grey milter.
+#
+# Written for Slackware Linux.
+
+smfgrey_start() {
+  if [ -x /usr/local/sbin/smf-grey ]; then
+    echo -n "Starting smf-grey milter:  "
+    echo -n "/usr/local/sbin/smf-grey "
+    /usr/local/sbin/smf-grey
+  fi
+}
+
+smfgrey_stop() {
+  killall smf-grey 2> /dev/null
+}
+
+smfgrey_restart() {
+  smfgrey_stop
+  sleep 1
+  smfgrey_start
+}
+
+case "$1" in
+'start')
+  smfgrey_start
+  ;;
+'stop')
+  smfgrey_stop
+  ;;
+'restart')
+  smfgrey_restart
+  ;;
+*)
+  echo "usage $0 start|stop|restart"
+esac

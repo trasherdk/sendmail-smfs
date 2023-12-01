@@ -1,0 +1,64 @@
+#!/bin/sh
+# Startup script for smf-zombie milter
+#
+# chkconfig: 2345 75 35
+# description: Run smf-zombie milter that stops spam from zombie hosts
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+[ -f /usr/local/sbin/smf-zombie ] || exit 0
+
+prog="smf-zombie"
+LOCKFILE=/var/lock/subsys/$prog
+
+start() {
+    echo -n $"Starting $prog: " 
+    daemon /usr/local/sbin/smf-zombie
+    RETVAL=$?
+    touch $LOCKFILE
+    echo
+    return $RETVAL
+}
+
+stop() {
+    if test "x`pidof smf-zombie`" != x; then
+	echo -n $"Stopping $prog: "
+	killproc smf-zombie
+	echo
+    fi
+    RETVAL=$?
+    rm -f $LOCKFILE
+    return $RETVAL
+}
+
+case "$1" in
+	start)
+	    start
+	    ;;
+	
+	stop)
+	    stop
+	    ;;
+	
+	status)
+	    status smf-zombie
+	    ;;
+	restart)
+	    stop
+	    start
+	    ;;
+	condrestart)
+	    if [ -f $LOCKFILE ]; then
+		stop
+		start
+	    fi
+	    ;;
+	
+	*)
+	    echo $"Usage: $0 {start|stop|restart|condrestart|status}"
+	    exit 1
+
+esac
+
+exit $RETVAL

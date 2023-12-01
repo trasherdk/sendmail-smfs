@@ -1,0 +1,41 @@
+Thu Jun 08 2006 (ek)
+====================
+smf-clamd v1.2.1
+
+ ! workaround for the Sendmail socket unsafe
+   error on some platforms was implemented
+ - clean e-Mail messages logging was removed
+ + configuration file, default user and
+   working directory were changed
+ + format of log records was changed
+ + some samples of start-up scripts were added
+ + new TODO tasks were added
+ + cosmetic enhancements were made
+
+Tue Nov 15 2005 (ek)
+====================
+smf-clamd v1.2.0
+
+ + cosmetic enhancements were made
+
+Wed Aug 03 2005 (ek)
+====================
+smf-clamd v1.1.0
+
+ + optimizations for heavily loaded
+   servers were made
+ + cosmetic enhancements were made
+
+Thu May 05 2005 (ek)
+====================
+smf-clamd v1.0.1
+
+ ! incorrect default configuration
+   parameter value was fixed
+   (pointed by Carl Duescher)
+
+Tue Apr 12 2005 (ek)
+====================
+smf-clamd v1.0.0
+
+ * public release

@@ -1,0 +1,36 @@
+#!/bin/sh
+# Start/stop/restart the smf-clamd milter.
+#
+# Written for Slackware Linux.
+
+smfclamd_start() {
+  if [ -x /usr/local/sbin/smf-clamd ]; then
+    echo -n "Starting smf-clamd milter:  "
+    echo -n "/usr/local/sbin/smf-clamd "
+    /usr/local/sbin/smf-clamd
+  fi
+}
+
+smfclamd_stop() {
+  killall smf-clamd 2> /dev/null
+}
+
+smfclamd_restart() {
+  smfclamd_stop
+  sleep 1
+  smfclamd_start
+}
+
+case "$1" in
+'start')
+  smfclamd_start
+  ;;
+'stop')
+  smfclamd_stop
+  ;;
+'restart')
+  smfclamd_restart
+  ;;
+*)
+  echo "usage $0 start|stop|restart"
+esac

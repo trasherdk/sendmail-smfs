@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# PROVIDE: smf-clamd
+# REQUIRE: NETWORKING
+# BEFORE: sendmail
+
+# Written for FreeBSD.
+#
+# Copy this file into /etc/rc.d as /etc/rc.d/smfclamd
+# Add this line to /etc/rc.conf:
+#
+# smfclamd_enable="YES"
+
+. /etc/rc.subr
+
+name="smfclamd"
+rcvar=`set_rcvar`
+command="/usr/local/sbin/smf-clamd"
+
+load_rc_config ${name}
+run_rc_command "$1"
+

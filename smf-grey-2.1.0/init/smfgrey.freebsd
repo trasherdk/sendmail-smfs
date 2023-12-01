@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# PROVIDE: smf-grey
+# REQUIRE: NETWORKING
+# BEFORE: sendmail
+
+# Written for FreeBSD.
+#
+# Copy this file into /etc/rc.d as /etc/rc.d/smfgrey
+# Add this line to /etc/rc.conf:
+#
+# smfgrey_enable="YES"
+
+. /etc/rc.subr
+
+name="smfgrey"
+rcvar=`set_rcvar`
+command="/usr/local/sbin/smf-grey"
+
+load_rc_config ${name}
+run_rc_command "$1"

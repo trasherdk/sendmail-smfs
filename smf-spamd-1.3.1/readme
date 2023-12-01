@@ -1,0 +1,73 @@
+About
+=====
+  It's a lightweight, fast and reliable Sendmail milter for SpamAssassin.
+It uses advanced statistical and heuristic tests to identify SPAM built
+into spamd.
+
+  Features:
+
+    - friendly hosts/networks whitelist;
+    - SMTP AUTH support;
+    - scanning of e-Mail messages less than certain size;
+    - scan results header builder;
+    - probable SPAM e-Mail messages Subject tagging;
+    - probable SPAM e-Mail messages quarantine and collector;
+    - blocking of the extra SPAM e-Mail messages at the DATA stage of SMTP session.
+
+Install
+=======
+  Requirements: Linux/FreeBSD, Sendmail v8.11 and higher compiled with MILTER
+support enabled, Sendmail Development Kit, POSIX threads library, SpamAssassin.
+
+  Make sure that the spamd daemon is configured and started.
+
+  Edit the Makefile according to version of your Sendmail program and OS.
+Edit the smf-config.h file if it is necessary (WHITE_LIST, CONTACT_ADDRESS,
+TAG_SUBJECT, COPY_SPAM, REDIRECT_SPAM and SPAM_BOX parameters).
+
+  Under the root account:
+make
+make install
+/usr/local/sbin/smf-spamd
+
+  Add this milter to start-up scripts before starting the Sendmail daemon.
+
+  Add these lines to your Sendmail configuration file:
+define(`confMILTER_MACROS_HELO', confMILTER_MACROS_HELO`, {verify}')dnl
+define(`confMILTER_MACROS_ENVFROM', confMILTER_MACROS_ENVFROM`, {msg_size}')dnl
+INPUT_MAIL_FILTER(`smf-spamd', `S=unix:/var/smfs/smf-spamd.sock, T=S:1m;R:1m')dnl
+
+Rebuild your Sendmail configuration file and restart the Sendmail daemon.
+
+  Under Linux add this line to your syslog.conf file and restart the Syslog daemon:
+local3.*	-/var/log/spam.log
+
+  Under FreeBSD run this command: touch /var/log/spam.log
+Then, add these lines to your syslog.conf file and restart the Syslog daemon:
+!smf-spamd
+local3.*	-/var/log/spam.log
+
+If you want to log only SPAM e-Mail messages, set the syslog priority to the notice.
+
+In the quarantine mode the probable SPAM e-Mail messages will be redirected to the
+specified quarantine mailbox. All envelope recipients will be removed, and inserted
+into original e-Mail message as X-Original-To: headers.
+
+Notes: the successfully authenticated senders will bypass the filtering.
+
+TODO
+====
+  - editable external configuration file;
+  - something else? just let me know.
+
+  If you like this program, consider to purchase any of my commercial milters
+from http://spamfree.ru/
+
+Become a sponsor for the SMFS project!
+
+Any suggestions and bugs please send to <me@kurmanin.info>
+
+http://smfs.sourceforge.net/
+http://sourceforge.net/projects/smfs/
+http://kurmanin.info/
+    

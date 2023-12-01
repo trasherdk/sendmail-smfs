@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# PROVIDE: smf-zombie
+# REQUIRE: NETWORKING
+# BEFORE: sendmail
+
+# Written for FreeBSD.
+#
+# Copy this file into /etc/rc.d as /etc/rc.d/smfzombie
+# Add this line to /etc/rc.conf:
+#
+# smfzombie_enable="YES"
+
+. /etc/rc.subr
+
+name="smfzombie"
+rcvar=`set_rcvar`
+command="/usr/local/sbin/smf-zombie"
+
+load_rc_config ${name}
+run_rc_command "$1"

@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# PROVIDE: smf-spamd
+# REQUIRE: NETWORKING
+# BEFORE: sendmail
+
+# Written for FreeBSD.
+#
+# Copy this file into /etc/rc.d as /etc/rc.d/smfspamd
+# Add this line to /etc/rc.conf:
+#
+# smfspamd_enable="YES"
+
+. /etc/rc.subr
+
+name="smfspamd"
+rcvar=`set_rcvar`
+command="/usr/local/sbin/smf-spamd"
+
+load_rc_config ${name}
+run_rc_command "$1"
+

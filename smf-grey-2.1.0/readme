@@ -1,0 +1,127 @@
+About
+=====
+  It's a lightweight, fast and reliable Sendmail milter that implements the
+Greylisting anti spam technology as proposed by Evan Harris. This technology
+can significantly reduce the amount of spam and worms going from zombie hosts,
+which may produce up to 80% of world SPAM. This milter has a very effective
+Greylisting algorithm on the base of this tuple: sender's IP address
+(Class C subnet), envelope sender address and envelope recipient address.
+  It's a lite alternative for the milter-greylist, graymilter and milter-gris
+milters.
+
+  Features:
+
+    - external editable configuration file;
+    - whitelist by an IP address (in CIDR notation);
+    - whitelist by a PTR (reverse DNS) record;
+    - whitelist by an envelope sender e-Mail address;
+    - whitelist by an envelope recipient e-Mail address;
+    - whitelists auto reloading;
+    - scalable and tunable fast in-memory greylist/autowhitelist engine;
+    - autowhitelisted records reloading and regular dumping;
+    - SMTP AUTH support;
+    - RFC-2821 standard compliance;
+    - Greylisting results header builder.
+
+Install
+=======
+  Requirements: Linux/FreeBSD/Solaris, Sendmail v8.11 and higher compiled with
+MILTER API support enabled, Sendmail Development Kit, POSIX threads library.
+
+  Edit the Makefile according to version of your Sendmail program and OS.
+
+  Under the root account:
+make
+make install
+
+  Inspect and edit the /etc/mail/smfs/smf-grey.conf file.
+
+/usr/local/sbin/smf-grey
+or
+/usr/local/sbin/smf-grey -c /etc/mail/smfs/smf-grey.conf
+
+  Add this milter to start-up scripts before starting Sendmail daemon.
+Look at the contributed samples of start-up scripts.
+
+  Add these lines to your Sendmail configuration file (usually sendmail.mc):
+define(`confMILTER_MACROS_HELO', confMILTER_MACROS_HELO`, {verify}')dnl
+INPUT_MAIL_FILTER(`smf-grey', `S=unix:/var/run/smfs/smf-grey.sock, T=S:30s;R:30s')dnl
+
+IMPORTANT: make sure that /var/run is not a group writable directory! If so,
+or chmod 755 /var/run, or if it's impossible switch to another directory.
+
+IMPORTANT: make sure that libmilter is compiled with BROKEN_PTHREAD_SLEEP defined.
+If this symbol is not defined, libmilter will use sleep() in signal-handler thread,
+which may cause various program misbehaviors, including coredumps.
+To rebuild Sendmail with this symbol defined, add the following line to your
+Sendmail/devtools/Site/site.config.m4:
+
+  APPENDDEF(`confENVDEF', `-DBROKEN_PTHREAD_SLEEP')
+
+If you have the smf-zombie and smf-sav milters installed, the smf-grey milter
+should be added after the smf-zombie and smf-sav milters.
+
+Rebuild your Sendmail configuration file and restart Sendmail daemon.
+
+  Under Linux add this line to your syslog.conf file and restart Syslog daemon:
+xxx.info	-/var/log/greylist.log
+
+  Under FreeBSD run this command: touch /var/log/greylist.log
+Then, add these lines to your syslog.conf file and restart Syslog daemon:
+!smf-grey
+xxx.info	-/var/log/greylist.log
+
+Where xxx is the corresponded syslog facility from your smf-grey configuration
+file.
+
+  If you want to exclude from logging delivery attempts within
+the Greylisting time period, set the syslog priority to notice
+instead info. They are just will be filtered out by Syslog daemon.
+
+Notes: the successfully authenticated senders will bypass Greylisting.
+
+For the best results consider to use the smf-zombie and smf-sav milters.
+
+It's very useful to add at your Sendmail configuration file these lines:
+
+define(`confPRIVACY_FLAGS', `goaway,noetrn,nobodyreturn,noreceipts')dnl
+define(`confTO_COMMAND', `1m')dnl
+define(`confTO_IDENT', `0s')dnl
+define(`confMAX_DAEMON_CHILDREN', `256')dnl enlarge if it's required
+define(`confCONNECTION_RATE_THROTTLE', `8')dnl enlarge if it's required
+define(`confBAD_RCPT_THROTTLE', `1')dnl Sendmail v8.12+
+FEATURE(`greet_pause', `5000')dnl Sendmail v8.13+
+
+TODO
+====
+  (min) legitimate e-Mail messages friendly Greylisting technique (v2.2.0);
+  (min) multi MX synchronization (v3.0.0);
+  (?)   something else? just let me know.
+
+(min) - minor priority;
+(med) - medium priority;
+(maj) - major priority.
+
+  If you like this program, consider to purchase any of my commercial milters
+from http://spamfree.ru/
+  Thank you!
+
+======================================
+Become a sponsor for the SMFS project!
+======================================
+
+Any suggestions, support requests and bugs please send to <me@kurmanin.info>
+
+Subscribe to SMFS announcements mailing list here:
+  https://lists.sourceforge.net/lists/listinfo/smfs-list
+
+Subscribe to SMFS users mailing list here:
+  https://lists.sourceforge.net/lists/listinfo/smfs-users
+
+SMFS development blog (opened for all):
+  http://smfs.wordpress.com/
+
+http://smfs.sourceforge.net/
+http://sourceforge.net/projects/smfs/
+http://kurmanin.info/
+    

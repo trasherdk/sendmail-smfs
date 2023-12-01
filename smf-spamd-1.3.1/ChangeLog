@@ -1,0 +1,50 @@
+Thu Jan 18 2007 (ek)
+====================
+smf-spamd v1.3.1
+
+ ! incorrect handling of missed
+   Message-Id: header was fixed
+ + cosmetic enhancements were made
+
+Mon Jul 10 2006 (ek)
+====================
+smf-spamd v1.3.0
+
+ + probable SPAM e-Mail messages
+   quarantine was implemented
+ + cosmetic enhancements were made
+
+Tue Jun 20 2006 (ek)
+====================
+smf-spamd v1.2.1
+
+ ! workaround for the Sendmail socket unsafe
+   error on some platforms was implemented
+ + configuration file, default user and
+   working directory were changed
+ + format of log records was changed
+ + some samples of start-up scripts were added
+ + new TODO tasks were added
+ + cosmetic enhancements were made
+
+Tue Nov 01 2005 (ek)
+====================
+smf-spamd v1.2.0
+
+ + successfully authenticated senders
+   will bypass the filtering
+ + cosmetic enhancements were made
+
+Thu Aug 11 2005 (ek)
+====================
+smf-spamd v1.1.0
+
+ + optimizations for heavily loaded
+   servers were made
+ + cosmetic enhancements were made
+
+Tue Apr 12 2005 (ek)
+====================
+smf-spamd v1.0.0
+
+ * public release

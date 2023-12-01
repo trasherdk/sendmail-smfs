@@ -1,0 +1,73 @@
+Thu Feb 01 2007 (ek)
+====================
+smf-grey v2.1.0
+
+  + whitelists auto reloading was implemented
+  + autowhitelisted records regular dumping
+      and reloading was implemented
+  ! default greylisting time period
+      was increased
+  + new TODO tasks were added
+  + cosmetic enhancements were made
+
+Fri Sep 22 2006 (ek)
+====================
+smf-grey v2.0.0
+
+  - on-disk cache has been removed
+  + support for an external editable
+      configuration file was implemented
+  + whitelist by an IP address
+      (in CIDR notation) was implemented
+  + whitelist by a PTR (reverse DNS) record
+      was implemented
+  + whitelist by an envelope sender
+      e-Mail address was implemented
+  + whitelist by an envelope recipient
+      e-Mail address was implemented
+  + scalable fast in-memory greylist/autowhitelist
+      engine was implemented
+  + performance has been drastically improved
+  + new TODO tasks were added
+  + cosmetic enhancements were made
+
+Fri Jun 30 2006 (ek)
+====================
+smf-grey v1.2.1
+
+ ! workaround for the Sendmail socket unsafe
+   error on some platforms was implemented
+ + QDBM engine has been updated
+ + configuration file, default user and
+   working directory were changed
+ + format of log records was changed
+ + some samples of start-up scripts were added
+ + new TODO tasks were added
+ + cosmetic enhancements were made
+
+Fri Nov 25 2005 (ek)
+====================
+smf-grey v1.2.0
+
+ + the GreyList cache has been
+   fully redesigned
+ + the performance has been improved
+ - the MD5 hash has been removed due
+   to the possibility of collisions
+ + cosmetic enhancements were made
+
+Thu Sep 08 2005 (ek)
+====================
+smf-grey v1.1.0
+
+ ! a problem in which cache databases
+   could be eventually broken was fixed
+ + successfully authenticated senders
+   may now bypass the GreyListing
+ + cosmetic enhancements were made
+
+Tue Aug 30 2005 (ek)
+====================
+smf-grey v1.0.0
+
+ * public release

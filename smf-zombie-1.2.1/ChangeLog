@@ -1,0 +1,45 @@
+Tue Jun 06 2006 (ek)
+====================
+smf-zombie v1.2.1
+
+ ! workaround for the Sendmail socket unsafe
+   error on some platforms was implemented
+ ! bug with the greeting pause code
+   under FreeBSD was fixed
+ + configuration file, default user and
+   working directory were changed
+ + format of log records was changed
+ + some samples of start-up scripts were added
+ + new TODO tasks were added
+ + cosmetic enhancements were made
+
+Wed Nov 30 2005 (ek)
+====================
+smf-zombie v1.2.0
+
+ + successfully authenticated senders
+   will now bypass the filtering
+ + cosmetic enhancements were made
+
+Thu Sep 15 2005 (ek)
+====================
+smf-zombie v1.1.0
+
+ + the performance of check RBL
+   algorithm has been improved
+ + cosmetic enhancements were made
+
+Fri Jul 22 2005 (ek)
+====================
+smf-zombie v1.0.1
+
+ ! the check RBL algorithm has been rewritten
+   (gethostbyname_r works incorrectly
+    or absent on some platforms)
+ + cosmetic enhancements were made
+
+Tue Jun 28 2005 (ek)
+====================
+smf-zombie v1.0.0
+
+ * public release
